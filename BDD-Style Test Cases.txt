@@ -1,0 +1,72 @@
+BDD-Style Test Cases
+
+
+
+
+Feature: Compose Email Functionality in Gmail
+  As a Gmail user
+  I want to use the compose function to send emails
+  So that I can communicate effectively
+
+  Scenario: Open compose window
+    Given I am logged into Gmail
+    When I click on the "Compose" button
+    Then a new compose window should open with "To," "Subject," and "Body" fields
+
+  Scenario: Send email with all fields filled
+    Given I am in the compose window
+    And I have entered a valid email in the "To" field
+    And I have entered text in the "Subject" and "Body" fields
+    When I click on "Send"
+    Then the email should be sent successfully
+    And a confirmation message should appear
+
+  Scenario: Automatically save draft when typing
+    Given I am in the compose window
+    When I type in the email "Body"
+    Then the draft should be saved automatically
+    And it should appear in the "Drafts" folder
+
+  Scenario: Add multiple recipients in "To" field
+    Given I am in the compose window
+    And I have entered multiple email addresses separated by commas in the "To" field
+    When I click on "Send"
+    Then the email should be sent to all listed recipients
+
+  Scenario: Attach a file to the email
+    Given I am in the compose window
+    When I click on "Attach" and select a file
+    Then the file should be attached successfully
+    And it should be visible in the compose window
+
+  # Negative Scenarios
+  Scenario: Attempt to send email with empty "To" field
+    Given I am in the compose window
+    And I have left the "To" field empty
+    When I click on "Send"
+    Then an error message should appear
+    And the email should not be sent
+
+  Scenario: Attempt to send email with invalid email format in "To" field
+    Given I am in the compose window
+    And I have entered an invalid email format (e.g., "test@com") in the "To" field
+    When I click on "Send"
+    Then an error message should appear requesting a valid email format
+
+  Scenario: Attempt to attach a file larger than the allowed size
+    Given I am in the compose window
+    When I click on "Attach" and select a file larger than the allowed size
+    Then an error message should appear indicating the attachment size exceeds the limit
+
+  Scenario: Attempt to send email with no internet connection
+    Given I am in the compose window
+    And there is no internet connection
+    When I fill in all fields and click "Send"
+    Then a network error message should appear
+    And the email should not be sent
+
+  Scenario: Enter an overly long subject in the "Subject" field
+    Given I am in the compose window
+    And I have entered a subject longer than 1000 characters
+    When I click on "Send"
+    Then an error should appear or the subject should be truncated
